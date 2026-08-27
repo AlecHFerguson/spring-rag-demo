@@ -1,4 +1,4 @@
-package ai.smartalec.rag.retrieval_augmented_generation_demo
+package ai.smartalec.ragdemo
 
 import org.junit.jupiter.api.Test
 import org.springframework.boot.test.context.SpringBootTest
