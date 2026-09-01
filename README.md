@@ -11,3 +11,10 @@ podman run -d \
   -p 5432:5432 \
   docker.io/pgvector/pgvector:pg17
 ```
+
+```shell
+curl -H "Content-type: text/plain" \
+  --data "What is the best vegan pizza in San Francisco?" \
+  http://localhost:8080/chat
+
+```
