@@ -5,8 +5,11 @@ import org.jsoup.Jsoup
 import org.jsoup.nodes.Document
 import java.io.File
 
-const val OUTPUT_DIRECTORY = "/Users/alecferguson/scratch/caltopo-help"
-const val BASE_URL = "https://training.caltopo.com"
+private const val BASE_URL = "https://training.caltopo.com"
+private const val OUTPUT_DIRECTORY = "/Users/alecferguson/scratch/caltopo-help"
+private const val CSV_SUFFIX = "csv"
+private val pipeRegexp = Regex("[|]")
+private val spaceRegexp = Regex("\\s+")
 
 fun main() {
     val topLevelResponse = makeRequestAndParse(BASE_URL)
@@ -27,6 +30,7 @@ private fun parseUrlsFromTopLevelResponse(document: Document): List<String> {
 
 private fun writeMarkdownFile(html: Document) {
     val markdown = HtmlToMarkdown.convert(html.html())
-    val file = File("$OUTPUT_DIRECTORY/${html.title()}")
+    val underscoreTitle = html.title().replace(pipeRegexp, "").replace(spaceRegexp, "_")
+    val file = File("$OUTPUT_DIRECTORY/$underscoreTitle.$CSV_SUFFIX")
     file.writeText(markdown.content!!)
 }
