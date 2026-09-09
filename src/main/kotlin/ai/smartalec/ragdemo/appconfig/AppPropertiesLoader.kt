@@ -1,13 +1,12 @@
 package ai.smartalec.ragdemo.appconfig
 
-import org.springframework.beans.factory.annotation.Value
-import org.springframework.stereotype.Component
+import org.springframework.boot.context.properties.ConfigurationProperties
 import java.nio.file.Path
 import java.nio.file.Paths
 
-@Component
+@ConfigurationProperties("ai.smartalec")
 data class AppPropertiesLoader(
-    @Value("ai.smartalec.markdown.data-directory") private val dataDirectoryRaw: String,
+    private val markdownDirectory: String,
 ) {
-    val dataDirectory: Path by lazy { Paths.get(dataDirectoryRaw) }
+    val dataDirectory: Path by lazy { Paths.get(markdownDirectory) }
 }

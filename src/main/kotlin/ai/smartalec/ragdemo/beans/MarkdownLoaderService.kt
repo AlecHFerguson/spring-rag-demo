@@ -19,12 +19,16 @@ class MarkdownLoaderService(
 ) {
     @Async
     fun initLoadMarkdown() {
+        var fileCount = 0
+        vectorStore.delete("")
         Files.newDirectoryStream(appPropertiesLoader.dataDirectory, FILE_PATTERN).use { entryStream ->
             for (file in entryStream) {
+                fileCount++
                 val fileSystemResource = FileSystemResource(file)
                 val reader = MarkdownDocumentReader(fileSystemResource, MarkdownDocumentReaderConfig.defaultConfig())
                 vectorStore.add(reader.read())
             }
         }
+        println("Loaded $fileCount markdown files")
     }
 }

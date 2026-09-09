@@ -4,10 +4,12 @@ import ai.smartalec.ragdemo.beans.MarkdownLoaderService
 import ai.smartalec.ragdemo.model.MarkdownLoadResponse
 import org.springframework.http.ResponseEntity
 import org.springframework.web.bind.annotation.PostMapping
+import org.springframework.web.bind.annotation.RequestMapping
 import org.springframework.web.bind.annotation.RestController
 
-@RestController("/admin")
-class AdminController(
+@RestController
+@RequestMapping("/admin")
+final class AdminController(
     private val markdownLoaderService: MarkdownLoaderService,
 ) {
     @PostMapping("/load-markdown")
