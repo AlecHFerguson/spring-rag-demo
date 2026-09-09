@@ -11,6 +11,17 @@ Files are loaded into a vector database; in this case `pgvector` from PostgreSQL
 is sent, Spring AI finds the documentation which most closely matches the caller's question and
 passes it to the model. The model will tend to 
 
+## AI Backend
+This service is setup to run the AI model locally via [Ollama](https://ollama.com). For easy
+startup, install Ollama locally and run the `llama3` model.
+
+```shell
+ollama run llama3
+```
+
+Ollama is configured as the backend in `application.properties`. Other backends have not been
+tested; however, Spring AI has support for most models. See [Chat Model API](https://docs.spring.io/spring-ai/reference/api/chatmodel.html)
+for details.
 
 ## PostgreSQL Setup
 This app uses PostGreSQL, including PGVector. Use either `podman` or `docker` to create a local
@@ -57,7 +68,24 @@ the files have changed since last load. This way minor file changes do not resul
 
 ## Making a Request
 ```shell
-curl -H 'Content-type: text/plain' \
-  --data "How do you draw a line on a map?" \
+curl -H 'Content-type: application/json' \
+  --data '{"message":"How do you draw a line on a map?"}' \
   http://localhost:8080/chat
+
+{
+  "message": "According to the context, to draw a line on a map ...",
+  "conversationId": "aaed8a2e-972c-4d97-a7f0-add8edf909f4"
+}
+```
+
+In order to maintain context for further messages, pass `conversationId` on the next request.
+```shell
+curl -H 'Content-type: application/json' \
+  --data '{"message":"What about on iPhone?", "conversationId":"aaed8a2e-972c-4d97-a7f0-add8edf909f4"}' \
+  http://localhost:8080/chat
+
+{
+  "message":"According to the context, you can draw a line on the iPhone app by using the \"Measure\" menu ...",
+  "conversationId":"aaed8a2e-972c-4d97-a7f0-add8edf909f4"
+}
 ```
