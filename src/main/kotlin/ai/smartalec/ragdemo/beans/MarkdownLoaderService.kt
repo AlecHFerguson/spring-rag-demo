@@ -1,7 +1,7 @@
 package ai.smartalec.ragdemo.beans
 
 import ai.smartalec.ragdemo.appconfig.AppPropertiesLoader
-import ai.smartalec.ragdemo.scripts.MARKDOWN_SUFFIX
+import ai.smartalec.ragdemo.model.Constants.MARKDOWN_SUFFIX
 import org.springframework.ai.reader.markdown.MarkdownDocumentReader
 import org.springframework.ai.reader.markdown.config.MarkdownDocumentReaderConfig
 import org.springframework.ai.vectorstore.VectorStore

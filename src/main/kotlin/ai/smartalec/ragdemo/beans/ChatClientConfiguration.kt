@@ -11,7 +11,7 @@ import org.springframework.context.annotation.Bean
 import org.springframework.context.annotation.Configuration
 
 @Configuration
-class ChatClientConfiguration(
+final class ChatClientConfiguration(
     private val vectorStore: VectorStore,
     private val chatMemory: ChatMemory,
 ) {

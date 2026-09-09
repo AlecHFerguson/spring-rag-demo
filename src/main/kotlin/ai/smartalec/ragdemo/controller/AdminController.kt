@@ -1,7 +1,7 @@
 package ai.smartalec.ragdemo.controller
 
 import ai.smartalec.ragdemo.beans.MarkdownLoaderService
-import ai.smartalec.ragdemo.model.MarkdownLoadResponse
+import ai.smartalec.ragdemo.model.dto.MarkdownLoadResponse
 import org.springframework.http.ResponseEntity
 import org.springframework.web.bind.annotation.PostMapping
 import org.springframework.web.bind.annotation.RequestMapping

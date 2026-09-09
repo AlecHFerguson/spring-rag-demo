@@ -7,7 +7,7 @@ import org.springframework.context.annotation.Bean
 import org.springframework.context.annotation.Configuration
 
 @Configuration
-class ChatMemoryConfiguration {
+final class ChatMemoryConfiguration {
     @Bean
     fun createChatMemory(): ChatMemory =
         MessageWindowChatMemory

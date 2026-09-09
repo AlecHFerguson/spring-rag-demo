@@ -1,4 +1,4 @@
-package ai.smartalec.ragdemo.model
+package ai.smartalec.ragdemo.model.dto
 
 import java.time.ZonedDateTime
 
