@@ -15,7 +15,7 @@ podman run -d \
 
 ```shell
 curl -H"Content-type: text/plain" \
-  --data "Help me plan a menu for a romantic date" \
+  --data "How do you draw a line on a map?" \
   http://localhost:8080/chat
 A romantic date! Based on the menu options provided, I'd suggest a menu that's light, refreshing, and romantic. Here's a plan:
 
