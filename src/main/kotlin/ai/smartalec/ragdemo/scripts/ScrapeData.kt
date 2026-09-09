@@ -9,8 +9,7 @@ private const val BASE_URL = "https://training.caltopo.com"
 const val OUTPUT_DIRECTORY = "/Users/alecferguson/scratch/caltopo-help"
 
 // TODO: md
-const val MARKDOWN_SUFFIX = "csv"
-const val MARKDOWN_FILE_PATH = "$OUTPUT_DIRECTORY/*.$MARKDOWN_SUFFIX"
+const val MARKDOWN_SUFFIX = "md"
 
 private val pipeRegexp = Regex("[|]")
 private val spaceRegexp = Regex("\\s+")
