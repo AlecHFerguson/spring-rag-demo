@@ -31,8 +31,6 @@ dependencies {
     implementation("org.springframework.ai:spring-ai-starter-vector-store-pgvector")
     implementation("org.springframework.ai:spring-ai-vector-store-advisor")
     implementation("tools.jackson.module:jackson-module-kotlin")
-    implementation("org.jsoup:jsoup:1.23.2")
-    implementation("io.xberg:html-to-markdown:3.11.6")
 
     testImplementation("org.springframework.boot:spring-boot-starter-webmvc-test")
     testImplementation("org.jetbrains.kotlin:kotlin-test-junit5")
