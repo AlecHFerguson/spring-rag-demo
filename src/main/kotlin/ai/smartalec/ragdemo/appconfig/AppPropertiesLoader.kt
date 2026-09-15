@@ -8,5 +8,7 @@ import java.nio.file.Paths
 data class AppPropertiesLoader(
     private val markdownDirectory: String,
 ) {
-    val dataDirectory: Path by lazy { Paths.get(markdownDirectory) }
+    val dataDirectory: Path by lazy {
+        Paths.get(markdownDirectory)
+    }
 }

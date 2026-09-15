@@ -69,23 +69,21 @@ the files have changed since last load. This way minor file changes do not resul
 ## Making a Request
 ```shell
 curl -H 'Content-type: application/json' \
-  --data '{"message":"How do you draw a line on a map?"}' \
+  --data '{"message":"How do you report an inaccuracy on the map?"}' \
   http://localhost:8080/chat
 
 {
-  "message": "According to the context, to draw a line on a map ...",
-  "conversationId": "aaed8a2e-972c-4d97-a7f0-add8edf909f4"
+  "message": "CalTopo does not go out into the field to measure and report inaccuracy on maps. Instead, they use a variety of well-established data sets ...",
+  "conversationId": "e998f1b5-6f15-4847-899d-c5b5c9263a75"
 }
 ```
 
 In order to maintain context for further messages, pass `conversationId` on the next request.
 ```shell
-curl -H 'Content-type: application/json' \
-  --data '{"message":"What about on iPhone?", "conversationId":"aaed8a2e-972c-4d97-a7f0-add8edf909f4"}' \
-  http://localhost:8080/chat
+curl -H 'Content-type: application/json'   --data '{"message":"What might be the source for, say, a lake shown on a steep slope?","conversationId":"e998f1b5-6f15-4847-899d-c5b5c9263a75"}'   http://localhost:8080/chat
 
 {
-  "message":"According to the context, you can draw a line on the iPhone app by using the \"Measure\" menu ...",
-  "conversationId":"aaed8a2e-972c-4d97-a7f0-add8edf909f4"
+  "message":"In this case, since the data is sourced from the USGS (United States Geological Survey), you could report the error to them.",
+  "conversationId":"e998f1b5-6f15-4847-899d-c5b5c9263a75"
 }
 ```
