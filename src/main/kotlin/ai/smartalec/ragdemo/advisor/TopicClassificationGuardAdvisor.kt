@@ -22,7 +22,7 @@ class TopicClassificationGuardAdvisor(
                 .builder()
                 .query(userQuery)
                 .topK(1)
-                .similarityThreshold(0.75)
+                .similarityThreshold(0.25)
                 .build()
         val vectorResult = vectorStore.similaritySearch(searchRequest)
         if (vectorResult.isEmpty()) {

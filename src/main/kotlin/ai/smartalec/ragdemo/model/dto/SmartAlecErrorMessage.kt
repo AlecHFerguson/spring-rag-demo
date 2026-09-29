@@ -1,3 +1,6 @@
 package ai.smartalec.ragdemo.model.dto
 
-class SmartAlecErrorMessage
+import org.springframework.http.HttpStatus
+import org.springframework.http.HttpStatusCode
+
+data class SmartAlecErrorMessage(val statusCode: Int, val messages: List<String>)
