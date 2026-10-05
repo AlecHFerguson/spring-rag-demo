@@ -9,7 +9,7 @@ import org.springframework.web.bind.annotation.ControllerAdvice
 import org.springframework.web.bind.annotation.ExceptionHandler
 import org.springframework.web.bind.annotation.ResponseStatus
 
-private val BAD_REQUEST = HttpStatus.BAD_REQUEST.value()
+private val BAD_REQUEST_STATUS_CODE = HttpStatus.BAD_REQUEST.value()
 
 @ControllerAdvice
 class ControllerAdvice {
@@ -17,7 +17,7 @@ class ControllerAdvice {
     @ResponseStatus(HttpStatus.BAD_REQUEST)
     fun handleOffTopicException(exception: OffTopicQueryException): ResponseEntity<SmartAlecErrorMessage> =
         ResponseEntity.badRequest().body(
-            SmartAlecErrorMessage(statusCode = BAD_REQUEST, messages = listOf(exception.message)),
+            SmartAlecErrorMessage(statusCode = BAD_REQUEST_STATUS_CODE, messages = listOf(exception.message)),
         )
 
     @ExceptionHandler(Exception::class)
