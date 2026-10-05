@@ -41,7 +41,6 @@ abstract class AbstractQuestionAnswerAdvisor(
         advisorChain: AdvisorChain,
     ): ChatClientRequest {
         val userQuery = chatClientRequest.prompt.userMessage.text ?: throw MissingPromptException()
-
         val documents = retrieveDocuments(userQuery = userQuery)
 
         // 2. Create the context from the documents.
@@ -51,7 +50,7 @@ abstract class AbstractQuestionAnswerAdvisor(
         val documentContext =
             documents
                 .stream()
-                .map<String?> { obj: Document? -> obj!!.getText() }
+                .map<String> { obj: Document -> obj.text }
                 .collect(Collectors.joining(System.lineSeparator()))
 
         // 3. Augment the user prompt with the document context.
