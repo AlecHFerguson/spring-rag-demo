@@ -1,8 +1,8 @@
 package ai.smartalec.ragdemo.beans
 
+import ai.smartalec.ragdemo.advisor.TopicClassificationGuardAdvisor
 import org.springframework.ai.chat.client.ChatClient
 import org.springframework.ai.chat.client.advisor.MessageChatMemoryAdvisor
-import org.springframework.ai.chat.client.advisor.vectorstore.QuestionAnswerAdvisor
 import org.springframework.ai.chat.memory.ChatMemory
 import org.springframework.ai.chat.model.ChatModel
 import org.springframework.ai.vectorstore.VectorStore
@@ -22,7 +22,7 @@ class ChatClientConfiguration(
         ChatClient
             .builder(chatModel)
             .defaultAdvisors(
-                MessageChatMemoryAdvisor.builder(chatMemory).build(),
-                QuestionAnswerAdvisor.builder(vectorStore).build(),
+                TopicClassificationGuardAdvisor(vectorStore = vectorStore),
+                MessageChatMemoryAdvisor.builder(chatMemory).order(10).build(),
             ).build()
 }
