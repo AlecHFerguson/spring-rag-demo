@@ -9,6 +9,16 @@ plugins {
 group = "ai.smartalec.rag"
 version = "0.0.1-SNAPSHOT"
 
+ktlint {
+    android.set(false)
+    ignoreFailures.set(false)
+    enableExperimentalRules.set(true)
+}
+
+tasks.test {
+    dependsOn(tasks.named("ktlintCheck"))
+}
+
 java {
     toolchain {
         languageVersion = JavaLanguageVersion.of(21)
@@ -34,6 +44,7 @@ dependencies {
 
     testImplementation("org.springframework.boot:spring-boot-starter-webmvc-test")
     testImplementation("org.jetbrains.kotlin:kotlin-test-junit5")
+    testImplementation("io.mockk:mockk-jvm:1.14.11")
     testRuntimeOnly("org.junit.platform:junit-platform-launcher")
 }
 
