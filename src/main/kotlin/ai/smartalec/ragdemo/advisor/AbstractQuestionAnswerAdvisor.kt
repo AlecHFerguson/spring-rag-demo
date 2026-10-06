@@ -72,13 +72,15 @@ abstract class AbstractQuestionAnswerAdvisor(
         advisorChain: AdvisorChain,
     ): ChatClientResponse {
         val chatResponseBuilder = ChatResponse.builder()
-        if (chatClientResponse.chatResponse() != null) {
-            chatResponseBuilder.from(chatClientResponse.chatResponse()!!)
+        val chatResponse = chatClientResponse.chatResponse()
+        if (chatResponse != null) {
+            chatResponseBuilder.from(chatResponse)
         }
-        if (chatClientResponse.context().get(QuestionAnswerAdvisor.RETRIEVED_DOCUMENTS) != null) {
+        val retrievedDocuments = chatClientResponse.context()[QuestionAnswerAdvisor.RETRIEVED_DOCUMENTS]
+        if (retrievedDocuments != null) {
             chatResponseBuilder.metadata(
                 QuestionAnswerAdvisor.RETRIEVED_DOCUMENTS,
-                chatClientResponse.context()[QuestionAnswerAdvisor.RETRIEVED_DOCUMENTS]!!,
+                retrievedDocuments,
             )
         }
         return ChatClientResponse
