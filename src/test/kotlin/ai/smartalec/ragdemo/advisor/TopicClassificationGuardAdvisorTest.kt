@@ -1,5 +1,6 @@
 package ai.smartalec.ragdemo.advisor
 
+import ai.smartalec.ragdemo.model.dto.MarkdownLoadResponse
 import ai.smartalec.ragdemo.model.exception.OFF_TOPIC_EXCEPTION_MESSAGE
 import ai.smartalec.ragdemo.model.exception.OffTopicQueryException
 import io.mockk.every
@@ -7,11 +8,18 @@ import io.mockk.mockk
 import org.junit.jupiter.api.Test
 import org.junit.jupiter.api.assertThrows
 import org.springframework.ai.chat.client.ChatClientRequest
+import org.springframework.ai.chat.client.ChatClientResponse
+import org.springframework.ai.chat.client.advisor.vectorstore.QuestionAnswerAdvisor.RETRIEVED_DOCUMENTS
+import org.springframework.ai.chat.messages.AssistantMessage
+import org.springframework.ai.chat.model.ChatResponse
+import org.springframework.ai.chat.model.Generation
 import org.springframework.ai.chat.prompt.Prompt
 import org.springframework.ai.document.Document
 import org.springframework.ai.vectorstore.SearchRequest
 import org.springframework.ai.vectorstore.VectorStore
 import kotlin.test.assertEquals
+
+private const val CONVERSATION_ID = "Let's Talk About It"
 
 private const val DOCUMENT_ONE_CONTENT = "The meaning of life is ..."
 private const val DOCUMENT_TWO_CONTENT = "Just a shot away"
@@ -33,7 +41,7 @@ the user that you can't answer the question.
 
 internal class TopicClassificationGuardAdvisorTest {
     @Test
-    fun testDocumentsFound() {
+    internal fun testDocumentsFound() {
         val vectorStore = mockk<VectorStore>()
         val documentOne = Document(DOCUMENT_ONE_CONTENT, mapOf<String, Any>())
         val documentTwo = Document(DOCUMENT_TWO_CONTENT, mapOf<String, Any>())
@@ -49,6 +57,30 @@ internal class TopicClassificationGuardAdvisorTest {
     }
 
     @Test
+    internal fun testAfter() {
+        val subject = TopicClassificationGuardAdvisor(vectorStore = mockk())
+        val testObject = MarkdownLoadResponse(message = "Dummy object to test object set")
+        val testGeneration = Generation(AssistantMessage("The meaning of life is skiing deep powder"))
+        val testResponse = ChatResponse(listOf(testGeneration))
+        val context = mapOf(Pair(RETRIEVED_DOCUMENTS, testObject))
+        val chatClientResponse =
+            ChatClientResponse
+                .builder()
+                .context(context)
+                .chatResponse(testResponse)
+                .build()
+        val result = subject.after(chatClientResponse, mockk())
+
+        val expectedResponse =
+            ChatClientResponse
+                .builder()
+                .chatResponse(testResponse)
+                .context(context)
+                .build()
+        assertEquals(expectedResponse, result)
+    }
+
+    @Test
     fun testEmptyResultsThrow() {
         val vectorStore = mockk<VectorStore>()
         every { vectorStore.similaritySearch(any<SearchRequest>()) } returns emptyList()
@@ -60,5 +92,11 @@ internal class TopicClassificationGuardAdvisorTest {
                 subject.before(chatClientRequest, mockk())
             }
         assertEquals(OFF_TOPIC_EXCEPTION_MESSAGE, thrownException.message)
+    }
+
+    @Test
+    internal fun testGetName() {
+        val subject = TopicClassificationGuardAdvisor(vectorStore = mockk())
+        assertEquals("TopicClassificationGuardAdvisor", subject.getName())
     }
 }
